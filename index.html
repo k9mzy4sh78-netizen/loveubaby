@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Love My Couple Hooda 🤍</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+
+  background: linear-gradient(
+    135deg,
+    #a9e7ff,
+    #ffc4df,
+    #a9e7ff,
+    #ffc4df
+  );
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+  padding: 35px 20px;
+  background: rgba(255,255,255,0.35);
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 30px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px #d58dbb55;
+}
+
+h1 {
+  color: #fff;
+  font-size: 30px;
+  text-shadow: 2px 3px 8px #d77ca9;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: white;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.couple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.couple img {
+  width: 43%;
+  max-width: 155px;
+  height: 175px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.5);
+  border-radius: 22px;
+  padding: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.couple img:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.love {
+  color: white;
+  font-size: 35px;
+  margin: 15px;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  50% { transform: scale(1.25); }
+}
+
+.footer {
+  color: white;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  color: white;
+  font-size: 22px;
+  animation: rise 7s linear infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% { opacity: 0.9; }
+  100% {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>I love my couple Hooda 🤍</h1>
+
+  <p class="subtitle">
+    You are my favorite person ♡
+  </p>
+
+  <div class="couple">
+    <img src="dudu.png" alt="Dudu">
+    <img src="bubu.png" alt="Bubu">
+  </div>
+
+  <div class="love">♡</div>
+
+  <p class="footer">
+    Together is my favorite place to be ✨
+  </p>
+
+</div>
+
+<script>
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = ["♡", "♥", "💕", "🤍"][
+    Math.floor(Math.random() * 4)
+  ];
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration =
+    (5 + Math.random() * 5) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 10000);
+}
+
+setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
