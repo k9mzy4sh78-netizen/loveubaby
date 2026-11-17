@@ -8,6 +8,7 @@
 <title>Love You Baby ♡</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -24,8 +25,14 @@
   padding: 0;
 }
 
+html, body {
+  width: 100%;
+  min-height: 100%;
+}
+
 body {
   min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 50% 40%, #48202d 0%, #241019 45%, #10070b 100%);
@@ -35,10 +42,13 @@ body {
 
 button {
   font: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #app {
   min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +85,7 @@ button {
   width: 100%;
   max-width: 500px;
   text-align: center;
-  animation: appear 1.2s ease;
+  animation: appear 1.2s ease both;
 }
 
 .ornament {
@@ -122,13 +132,13 @@ h1 {
   border-radius: 3px;
   letter-spacing: 3px;
   font-size: 11px;
-  cursor: pointer;
 }
 
 .yes-btn {
   color: #210d14;
   background: linear-gradient(135deg, #f2d9a5, #c49b5e);
   border: 1px solid var(--gold);
+  cursor: pointer;
   transition: .3s;
 }
 
@@ -159,7 +169,7 @@ h1 {
   width: 100%;
   max-width: 900px;
   text-align: center;
-  animation: appear .8s ease;
+  animation: appear .8s ease both;
 }
 
 .top-line {
@@ -209,8 +219,8 @@ h1 {
   padding: 10px 10px 18px;
   box-shadow: 0 15px 40px #0008;
   transform: rotate(-2deg);
-  transition: .5s;
-  aspect-ratio: 0.78;
+  transition: transform .5s;
+  aspect-ratio: .78;
   overflow: hidden;
 }
 
@@ -254,7 +264,7 @@ h1 {
   transition: .3s;
 }
 
-.nav button:hover {
+.nav button:hover:not(:disabled) {
   background: var(--gold);
   color: #1b0b10;
 }
@@ -272,6 +282,8 @@ h1 {
   font-size: 30px;
   letter-spacing: 3px;
 }
+
+/* HEART EFFECTS */
 
 .heart {
   position: fixed;
@@ -311,22 +323,74 @@ h1 {
 }
 
 @keyframes appear {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* MOBILE */
+
 @media(max-width: 500px) {
-  #app { padding: 16px; }
-  .photo-card { padding: 7px 7px 13px; }
-  .nav { gap: 12px; margin-top: 28px; }
-  .nav button { padding: 11px 15px; font-size: 9px; }
+  #app {
+    padding: 16px;
+  }
+
+  .photo-card {
+    padding: 7px 7px 13px;
+  }
+
+  .nav {
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .nav button {
+    padding: 11px 15px;
+    font-size: 9px;
+  }
 }
 
 @media(max-height: 650px) {
-  .photo-grid { max-width: 550px; }
-  .photo-card { aspect-ratio: 1.05; }
-  .photo-card:nth-child(2) { margin-top: 10px; }
-  .nav { margin-top: 18px; }
+  #app {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .photo-grid {
+    max-width: 550px;
+  }
+
+  .photo-card {
+    aspect-ratio: 1.05;
+  }
+
+  .photo-card:nth-child(2) {
+    margin-top: 10px;
+  }
+
+  .nav {
+    margin-top: 18px;
+  }
+
+  .slide-count {
+    margin-bottom: 14px;
+  }
+
+  .progress-wrap {
+    margin-bottom: 14px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }
 </style>
 </head>
@@ -354,7 +418,7 @@ h1 {
         YES ♡
       </button>
 
-      <button class="no-btn" disabled>
+      <button class="no-btn" disabled aria-disabled="true">
         NO
       </button>
     </div>
@@ -365,7 +429,7 @@ h1 {
 
   <!-- STORY PAGES -->
 
-  <section id="story">
+  <section id="story" aria-label="Our photo story">
 
     <div class="top-line"></div>
 
@@ -407,7 +471,8 @@ h1 {
 <script>
 
 /* =====================================
-   ตั้งค่ารูปภาพ 12 รูป ตรงนี้
+   PHOTO FILES
+   รูปทั้งหมด 12 รูป / 6 หน้า
    ===================================== */
 
 const slides = [
@@ -416,24 +481,24 @@ const slides = [
     "224045B1-27CC-4638-8C23-925215A7AE64.jpeg"
   ],
   [
-    "images/photo3.jpg",
-    "images/photo4.jpg"
+    "80A0D29F-981D-481A-BE4A-522BBCE6FDE3.JPG",
+    "BB946083-B3D7-49B3-8749-B5B51A993C8A.JPG"
   ],
   [
-    "images/photo5.jpg",
-    "images/photo6.jpg"
+    "279F9F55-5AF3-45D9-9576-84210D46F7F6.JPG",
+    "76FD189D-C9C7-48CF-9C6B-519E0610A3D8.JPG"
   ],
   [
-    "images/photo7.jpg",
-    "images/photo8.jpg"
+    "F778232C-A187-4DA4-94BB-DF1404807B25.JPG",
+    "00D69F7F-4F21-4EAB-BF69-7E079420B02F.JPG"
   ],
   [
-    "images/photo9.jpg",
-    "images/photo10.jpg"
+    "AB278DF3-8757-49AA-BDEF-58116C797C5A.JPG",
+    "D4ED3852-F9F8-4490-B904-C33C3BBDA57A.JPG"
   ],
   [
-    "images/photo11.jpg",
-    "images/photo12.jpg"
+    "80C8F0BC-46DB-4B11-BFF3-338364967D01.JPG",
+    "D85EABF9-8A07-42BC-8930-7ACA5A6EF45E.JPG"
   ]
 ];
 
@@ -442,13 +507,14 @@ let started = false;
 
 
 /* =====================================
-   HEART EFFECT
+   FLOATING HEARTS
    ===================================== */
 
 function makeHeart() {
   const heart = document.createElement("div");
+
   heart.className = "heart";
-  heart.innerHTML = Math.random() > .5 ? "♡" : "♥";
+  heart.textContent = Math.random() > .5 ? "♡" : "♥";
 
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = (12 + Math.random() * 22) + "px";
@@ -469,14 +535,22 @@ setInterval(makeHeart, 900);
 function heartBurst() {
   for (let i = 0; i < 35; i++) {
     const heart = document.createElement("div");
+
     heart.className = "burst";
-    heart.innerHTML = Math.random() > .5 ? "♥" : "♡";
+    heart.textContent = Math.random() > .5 ? "♥" : "♡";
 
     const angle = Math.random() * Math.PI * 2;
     const distance = 100 + Math.random() * 250;
 
-    heart.style.setProperty("--x", Math.cos(angle) * distance + "px");
-    heart.style.setProperty("--y", Math.sin(angle) * distance + "px");
+    heart.style.setProperty(
+      "--x",
+      Math.cos(angle) * distance + "px"
+    );
+
+    heart.style.setProperty(
+      "--y",
+      Math.sin(angle) * distance + "px"
+    );
 
     document.body.appendChild(heart);
 
@@ -486,7 +560,7 @@ function heartBurst() {
 
 
 /* =====================================
-   START
+   START STORY
    ===================================== */
 
 function startLove() {
@@ -521,8 +595,15 @@ function renderSlide() {
   img1.src = images[0];
   img2.src = images[1];
 
-  img1.onerror = () => img1.classList.add("missing");
-  img2.onerror = () => img2.classList.add("missing");
+  img1.onerror = () => {
+    img1.classList.add("missing");
+    console.error("Image not found:", images[0]);
+  };
+
+  img2.onerror = () => {
+    img2.classList.add("missing");
+    console.error("Image not found:", images[1]);
+  };
 
   document.getElementById("slideCount").textContent =
     String(currentSlide + 1).padStart(2, "0") + " / 06";
@@ -536,17 +617,23 @@ function renderSlide() {
   document.getElementById("endMessage").style.display =
     currentSlide === 5 ? "block" : "none";
 
-  document.getElementById("progress").innerHTML = "";
+  const progress = document.getElementById("progress");
+  progress.innerHTML = "";
 
   for (let i = 0; i < 6; i++) {
     const bar = document.createElement("div");
-    bar.className = "progress" + (i <= currentSlide ? " active" : "");
-    document.getElementById("progress").appendChild(bar);
+
+    bar.className =
+      "progress" + (i <= currentSlide ? " active" : "");
+
+    progress.appendChild(bar);
   }
 
-  document.getElementById("photoGrid").style.animation = "none";
-  void document.getElementById("photoGrid").offsetWidth;
-  document.getElementById("photoGrid").style.animation = "appear .5s ease";
+  const grid = document.getElementById("photoGrid");
+
+  grid.style.animation = "none";
+  void grid.offsetWidth;
+  grid.style.animation = "appear .5s ease";
 }
 
 
@@ -557,7 +644,7 @@ function renderSlide() {
 function changeSlide(direction) {
   const next = currentSlide + direction;
 
-  if (next < 0 || next >= 6) return;
+  if (next < 0 || next >= slides.length) return;
 
   currentSlide = next;
   renderSlide();
@@ -569,24 +656,32 @@ function changeSlide(direction) {
 
 
 /* =====================================
-   SWIPE FOR MOBILE
+   MOBILE SWIPE
    ===================================== */
 
 let touchStartX = 0;
-let touchEndX = 0;
+let touchStartY = 0;
 
 document.addEventListener("touchstart", (e) => {
+  if (!started || e.touches.length !== 1) return;
+
   touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
 }, { passive: true });
 
 document.addEventListener("touchend", (e) => {
-  touchEndX = e.changedTouches[0].screenX;
+  if (!started || e.changedTouches.length !== 1) return;
 
-  const distance = touchEndX - touchStartX;
+  const endX = e.changedTouches[0].screenX;
+  const endY = e.changedTouches[0].screenY;
 
-  if (!started || Math.abs(distance) < 60) return;
+  const distanceX = endX - touchStartX;
+  const distanceY = endY - touchStartY;
 
-  if (distance < 0) {
+  if (Math.abs(distanceX) < 60) return;
+  if (Math.abs(distanceX) < Math.abs(distanceY)) return;
+
+  if (distanceX < 0) {
     changeSlide(1);
   } else {
     changeSlide(-1);
